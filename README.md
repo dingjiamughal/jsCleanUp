@@ -31,9 +31,9 @@ console.log("obj1",obj1)//{a:15,b:20}
 值类型的赋值过程不影响被赋值的对象，而引用类型因为为了让内存占用空间小，所以指针指向同一目标，所以会互相影响。
 
 ## 2.typeof
-typeof只能识别值类型，无法识别引用类型
-值类型为 `undefined` `boolen` `number` `string`
-引用类型 `{}` `[]` `null` `console.log`，前三者用typeof识别返回object，console返回值为Function。
+typeof只能识别值类型，无法识别引用类型</br>
+值类型为 `undefined` `boolen` `number` `string`</br>
+引用类型 `{}` `[]` `null` `console.log`，前三者用typeof识别返回object，console返回值为Function
 
 ## 3.变量计算和强制类型转换
 
@@ -53,8 +53,8 @@ typeof只能识别值类型，无法识别引用类型
     if(param==undefined)//等同于param==null 别的情况都用`===`
 ```
 ## 4.内置函数
-js内置函数为：`Date` `Object` `Boolen` `String` `Array` `Number` `RegExp` `Function` `Error`
-js内置对象为：`JSON` `Math`
+js内置函数为：`Date` `Object` `Boolen` `String` `Array` `Number` `RegExp` `Function` `Error`</br>
+js内置对象为：`JSON` `Math`</br>
 内置对象：
 ```
 JSON.stringfy({a:1});// json to str "{"a":1}"
@@ -159,8 +159,8 @@ var a={
   }
 }
 ```
-1.a.fn(); //dingjia
-2.a.fn.call({"name":"dj"})//dj
+1.a.fn(); //dingjia</br>
+2.a.fn.call({"name":"dj"})//dj</br>
 3.var a1=a.fn;a1();//this===window 运行时a1中的函数在全局
 
 >如何改变this的指向？
@@ -399,8 +399,8 @@ function state_Change() {
 ```
 
 ## 跨域
-跨域条件：协议、域名、端口号
-可跨域的标签：`img` `script` `link`
+跨域条件：协议、域名、端口号</br>
+可跨域的标签：`img` `script` `link`</br>
 跨域的解决方案：`jsonp` `http header`
 
 ## 事件绑定
@@ -434,7 +434,7 @@ function bindEvent(elem,type,selector,fn){
 
 ### 事件代理
 ```js
-div.addEventLister("click",function(){
+div.addEventLister("click",function(e){
   e.target...
   })
 ```
@@ -457,7 +457,7 @@ sessionStorage.clear();
 
 # 四、开发环境
 ## IDE
-`subline` `vscode` `atom`
+`subline` `vscode` `atom`</br>
 atom插件:http://www.xhrsama.com/editor/atom/
 
 ## git
@@ -634,13 +634,13 @@ new webpack.optimize.CommonsChunkPlugin({
 
 # 五、运行环境
 ## 页面加载和渲染过程(window.onload和DOMContentLoaded区别)
-1.解析HTML结构。
-2.加载外部脚本和样式表文件。
-3.解析并执行脚本代码。
-4.DOM树构建完成。//DOMContentLoaded
-5.加载图片等外部文件。
+1.解析HTML结构。</br>
+2.加载外部脚本和样式表文件。</br>
+3.解析并执行脚本代码。</br>
+4.DOM树构建完成。//DOMContentLoaded</br>
+5.加载图片等外部文件。</br>
 6.页面加载完毕。//window.onload
 
 ## 性能优化
-减少请求文件，用webpack打包css js至一个文件减少请求数。
+减少请求文件，用webpack打包css js至一个文件减少请求数。</br>
 节流函数懒加载：http://www.xhrsama.com/javaScript/lazyLoad/
