@@ -10,7 +10,7 @@ export default {
             getPerfData(perf) {
                 const data = {
                     // 网络连接
-                    pervPage: perf.fetchStart - package.navigationStart,
+                    pervPage: perf.fetchStart - perf.navigationStart,
                     redirect: perf.redirectEnd - perf.redirectStart,
                     dns: perf.domainLookupEnd - perf.domainLookupStart,
                     connect: perf.connectEnd - perf.connectStart,
@@ -31,7 +31,7 @@ export default {
                     domReady: perf.domConnentLoadedEventStart - perf.navigationStart, // dom
                     interactive: perf.domInteractive - perf.navigationStart, // 可操作
                     ttfb: perf.responseStart - perf.navigationStart // 首字节
-                }
+                };
 
                 return data;
             },
@@ -51,7 +51,7 @@ export default {
                     else {
                         timer = setTimeout(runCheck, 100);
                     }
-                }
+                };
 
                 if (document.readyState === 'interactive') {
                     cb();
@@ -60,20 +60,18 @@ export default {
 
                 document.addEventListener('DomContentLoaded', () => {
                     runCheck();
-                })
+                });
             },
 
-            onLoad() {
+            onLoad() {}
+        };
 
-            }
-        }
-        
         window.addEventListener('DomConnentLoaded', () => {
             const performance = window.performance;
             Util.domReady(() => {
                 const perfData = Util.getPerfData(performance.timing);
-            })
-        })
+            });
+        });
     }
-   
+
 }
