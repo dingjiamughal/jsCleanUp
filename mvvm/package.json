@@ -1,0 +1,23 @@
+{
+  "name": "mvvm",
+  "version": "1.0.0",
+  "description": "手写 mvvm",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel *.html -p 8082"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dingjiamughal/mvvm.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dingjiamughal/mvvm/issues"
+  },
+  "homepage": "https://github.com/dingjiamughal/mvvm#readme",
+  "devDependencies": {
+    "less": "^3.9.0",
+    "parcel-bundler": "^1.11.0"
+  }
+}
