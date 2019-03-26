@@ -31,8 +31,8 @@ export default class Compile {
 
     compile(fragment) {
         // 深度遍历节点
-        // 1. Ele 取出attr
-        // 2. Text {{xxxx}}
+        // case1. Ele 取出attr
+        // case2. Text {{xxxx}}
         const childNodes = fragment.childNodes;
         [...childNodes].forEach(node => {
             if (isElement(node)) {
