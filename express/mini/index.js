@@ -2,6 +2,10 @@ const express = require('./lib/express');
 const app = express();
 
 app.get('/', (req, res) => {
+    res.end('main page');
+});
+
+app.get('/hello', (req, res) => {
     res.end('hello');
 });
 
