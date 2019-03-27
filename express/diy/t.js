@@ -1,6 +1,8 @@
-const a = Object.values('我也爱你').reduce((love, next) => {
-    love += `\u${next.codePointAt(0).toString(16)}`;
-    return love;
-}, '');
+const pp = {
+    name: 'dingjia',
+    age: 12
+};
 
-console.log(a);
+const {name, age} = pp;
+
+console.log(name, age);

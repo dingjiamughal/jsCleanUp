@@ -1,27 +1,30 @@
 const http = require('http');
-const path = require('path');
 const url = require('url');
+
 module.exports = () => {
     const operations = [];
+    const paramHandlers = {};
     const app = (req, res) => {
         const {pathname} = url.parse(req.url, true);
         let index = 0;
+
         function next(err) {
             if (index >= operations.length) {
-                res.end(`cannot found ${req.method}${pathname}`);
+                return res.end(`cannot found ${req.method}${pathname}`);
             }
 
-            const op = operations[index++];
+            let op = operations[index++];
             const {
                 type,
                 method,
                 callback
             } = op;
+
             if (err) {
                 // err出现表示下面所有东西都不执行了
                 // 所以目标是：只执行错误处理中间件
                 // 先找中间件，如果不是中间件 next对象中找
-                if (op.method === 'middleware') {
+                if (type === 'middleware') {
                     if (pathname === '/' || pathname.startsWith(method) || pathname === method) {
                         // 错误处理
                         if (callback.length === 4) {
@@ -43,7 +46,7 @@ module.exports = () => {
                 }
             }
             else {
-                if (op.method === 'middleware') {
+                if (type === 'middleware') {
                     // middleware method的匹配条件，只要前缀一样就行
                     if (pathname === '/' || pathname.startsWith(method) || pathname === method) {
                         callback(req, res, next);
@@ -53,12 +56,36 @@ module.exports = () => {
                     }
                 }
                 else {
-                    if ((pathname === method || method === '*')
-                        && (type === req.method.toLowerCase() || type === 'all')) {
-                        return callback(req, res);
+                    // 动态路由的情况
+                    if (op.params) { // ['name', 'age']
+                        const matchers = pathname.match(method); // ['a/b/c/d', 'a', 'b', 'c', 'd']
+                        if (matchers) {
+                            req.params = op.params.reduce((memo, next, index) => {
+                                memo[next] = matchers[index + 1];
+                                return memo;
+                            }, {});
+
+                            op.params.forEach(param => {
+                                const handler = paramHandlers[param];
+                                if (handler) {
+                                    return callback(req, res, () => callback(req, res), req.params.param);
+                                }
+
+                            });
+                        // callback(req, res);
+                        }
+                        else {
+                            next();
+                        }
                     }
                     else {
-                        next();
+                        if ((pathname === method || method === '*')
+                            && (type === req.method.toLowerCase() || type === 'all')) {
+                            return callback(req, res);
+                        }
+                        else {
+                            next();
+                        }
                     }
                 }
             }
@@ -79,7 +106,22 @@ module.exports = () => {
                 method,
                 callback
             };
+
+            // 判断method中是不是有占位符  /a/:b/c/:d
+            const isIncludeColon = method.includes(':');
+            if (isIncludeColon) {
+                let params = [];
+                method = method.replace(/:([^\/]+)/g, (...args) => {
+                    params.push(args[1]);
+                    return '([^\/]+)';
+                });
+                layer.method = new RegExp(method);
+                layer.params = params;
+            }
+
             operations.push(layer);
+            // console.log(operations);
+            // console.log('-----------');
         };
     });
 
@@ -107,6 +149,11 @@ module.exports = () => {
         operations.push(layer);
     };
 
+    // 绑定param 在req.params赋值时执行
+    app.param = (key, callback) => {
+        paramHandlers.key = callback;
+    };
+
     // 内置中间件，做一层代理
     app.use((req, res, next) => {
         const urlObj = url.parse(req.url, true);
@@ -120,5 +167,6 @@ module.exports = () => {
         let server = http.createServer(app);
         server.listen(...args);
     };
+
     return app;
 };

@@ -8,6 +8,9 @@ app.get('/home', (req, res) => {
 app.get('/route', (req, res) => {
     res.send(req.route);
 });
+app.get('/test/:name/age/:age', (req, res) => {
+    res.send(req.params);
+});
 
 app.get('*', (req, res) => [
     res.send('404')
