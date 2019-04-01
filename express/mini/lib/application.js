@@ -1,5 +1,6 @@
 const http = require('http');
 const url = require('url');
+const Router = './router';
 class Application {
     constructor() {
         this.routers = [{
@@ -11,6 +12,12 @@ class Application {
         }];
     }
 
+    lazyrouter() {
+        if (!this._router) {
+            this._router = new Router();
+        }
+    }
+
     get(method, callback) {
         this.routers.push({
             type: 'get',
@@ -19,10 +26,10 @@ class Application {
         });
     }
 
-    listen() {
+    listen(...args) {
         const server = http.createServer((req, res) => {
             const {pathname} = url.parse(req.url, true);
-            console.log(this.routers);
+
             this.routers.forEach(router => {
                 const {
                     type,
@@ -38,7 +45,7 @@ class Application {
             this.routers[0].callback(req, res);
         });
 
-        server.listen.apply(server, arguments);
+        server.listen(...args);
     }
 }
 
