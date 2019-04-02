@@ -5,6 +5,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const UglifyWebpackPlugin = require('uglifyjs-webpack-plugin');
+const HappyPack = require('happypack');
 
 const devMode = process.env.NODE_ENV === 'development';
 module.exports = {
@@ -24,11 +25,12 @@ module.exports = {
                 test: /\.(js|jsx)$/,
                 include: path.resolve(__dirname, './src'),
                 exclude: /node_modules/,
-                use: [
-                    {
-                        loader: 'babel-loader'
-                    }
-                ]
+                // use: [
+                //     {
+                //         loader: 'babel-loader'
+                //     }
+                // ]
+                use: 'happypack/loader?id=js'
             },
             {
                 test: /\.css$/,
@@ -52,7 +54,7 @@ module.exports = {
                 use: [
                     devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
                     {
-                        loader: 'css-loader',
+                        loader: 'css-loader'
 
                     },
                     {
@@ -99,8 +101,8 @@ module.exports = {
             '~': './src'
         },
         // modules: [
-            // path.resolve(__dirname, 'libs'),
-            // path.resolve(__dirname, 'node_modules')
+        // path.resolve(__dirname, 'libs'),
+        // path.resolve(__dirname, 'node_modules')
         // ]
     },
     devServer: {
@@ -154,6 +156,11 @@ module.exports = {
         new UglifyWebpackPlugin(),
         new Webpack.DllReferencePlugin({
             manifest: path.join(__dirname, 'dll', 'manifest.json')
+        }),
+        new HappyPack({
+            id: 'js',
+            threads: 4,
+            loaders: ['babel-loader']
         })
     ]
 };
