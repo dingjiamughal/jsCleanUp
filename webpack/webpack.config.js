@@ -18,9 +18,11 @@ module.exports = {
         filename: '[name].[hash:5].js'
     },
     module: {
+        // noParse: [/react\.production\.min\.js/],
         rules: [
             {
                 test: /\.(js|jsx)$/,
+                include: path.resolve(__dirname, './src'),
                 exclude: /node_modules/,
                 use: [
                     {
@@ -97,8 +99,8 @@ module.exports = {
             '~': './src'
         },
         // modules: [
-        //     path.resolve(__dirname, 'node_modules'),
-        //     path.resolve(__dirname, 'libs')
+            // path.resolve(__dirname, 'libs'),
+            // path.resolve(__dirname, 'node_modules')
         // ]
     },
     devServer: {
@@ -149,6 +151,9 @@ module.exports = {
             chunkFilename: devMode ? 'css/[id].css' : 'css/[id].[hash:7].css',
             publicPath: '/css'
         }),
-        new UglifyWebpackPlugin()
+        new UglifyWebpackPlugin(),
+        new Webpack.DllReferencePlugin({
+            manifest: path.join(__dirname, 'dll', 'manifest.json')
+        })
     ]
 };
