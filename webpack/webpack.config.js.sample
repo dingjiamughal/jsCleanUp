@@ -5,22 +5,10 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const UglifyWebpackPlugin = require('uglifyjs-webpack-plugin');
-const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const HappyPack = require('happypack');
-const merge = require('webpack-merge');
 
-const devMode = process.env.NODE_ENV !== 'production';
-console.log(devMode)
-
-let option = {};
-if (devMode) {
-    option = require('./webpack.dev.conf');
-}
-else {
-    option = require('./webpack.prod.conf');
-}
-
-const config = {
+const devMode = process.env.NODE_ENV === 'development';
+module.exports = {
     entry: {
         index: './src/index.js',
         base: './src/base.js',
@@ -37,12 +25,12 @@ const config = {
                 test: /\.(js|jsx)$/,
                 include: path.resolve(__dirname, './src'),
                 exclude: /node_modules/,
-                use: [
-                    {
-                        loader: 'babel-loader'
-                    }
-                ]
-                // use: 'happypack/loader?id=js'
+                // use: [
+                //     {
+                //         loader: 'babel-loader'
+                //     }
+                // ]
+                use: 'happypack/loader?id=js'
             },
             {
                 test: /\.css$/,
@@ -111,11 +99,20 @@ const config = {
         extensions: ['.js', '.json', '.vue', '.less'],
         alias: {
             '~': './src'
-        }
+        },
+        // modules: [
+        // path.resolve(__dirname, 'libs'),
+        // path.resolve(__dirname, 'node_modules')
+        // ]
+    },
+    devServer: {
+        contentBase: './dist',
+        host: 'localhost',
+        port: 8088,
+        compress: true // gzip
     },
     devtool: 'cheap-module-source-map',
     plugins: [
-        new ProgressBarPlugin(),
         new Webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery'
@@ -158,19 +155,12 @@ const config = {
         }),
         new UglifyWebpackPlugin(),
         new Webpack.DllReferencePlugin({
-            // manifest: path.join(__dirname, 'dll', 'manifest.json')
-            context: path.resolve(__dirname, './dll'),
-            manifest: require('./dll/manifest.json')
+            manifest: path.join(__dirname, 'dll', 'manifest.json')
         }),
-        new Webpack.DefinePlugin({
-            __env: process.env.NODE_ENV
-        }),
-        // new HappyPack({
-        //     id: 'js',
-        //     threads: 4,
-        //     loaders: ['babel-loader']
-        // })
+        new HappyPack({
+            id: 'js',
+            threads: 4,
+            loaders: ['babel-loader']
+        })
     ]
 };
-
-module.exports = merge(config, option);

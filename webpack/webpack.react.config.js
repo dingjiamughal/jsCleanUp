@@ -6,7 +6,7 @@ module.exports = {
         react: ['react', 'react-dom']
     },
     output: {
-        path: path.resolve(__dirname, './dist'),
+        path: path.resolve(__dirname, './dll'),
         filename: '[name]_dll.js',
         library: '_dll_[name]',
         libraryTarget: 'umd'
