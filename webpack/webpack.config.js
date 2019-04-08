@@ -22,9 +22,12 @@ else {
 
 const config = {
     entry: {
-        index: './src/index.js',
-        base: './src/base.js',
-        vendor: 'jquery'
+        // index: './src/index.js',
+        // base: './src/base.js',
+        // vendor: 'jquery'
+        pageA: './src/a.js',
+        pageB: './src/b.js',
+        pageC: './src/c.js',
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -107,39 +110,58 @@ const config = {
             }
         ]
     },
+    optimization: {
+        splitChunks: { // 代替 common-chunk-plugin
+            cacheGroups: {
+                common: {
+                    minChunks: 2,
+                    minSize: 0,
+                    chunks: 'initial'
+                },
+                vendor: {
+                    test: /node_modules/,
+                    chunks: 'initial',
+                    filename: '[name].bundle.js',
+                    // priority: 10,
+                    enforce: true
+                }
+            }
+        }
+    },
     resolve: {
         extensions: ['.js', '.json', '.vue', '.less'],
         alias: {
             '~': './src'
         }
     },
-    devtool: 'cheap-module-source-map',
+    // devtool: 'cheap-module-source-map',
     plugins: [
         new ProgressBarPlugin(),
+        new Webpack.optimize.ModuleConcatenationPlugin(),
         new Webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery'
         }),
-        new HtmlWebpackPlugin({
-            template: './src/index.html',
-            filename: 'index.html',
-            title: 'index~~',
-            hash: true,
-            minify: {
-                removeAttributeQuotes: true
-            },
-            chunks: ['index']
-        }),
-        new HtmlWebpackPlugin({
-            template: './src/main.html',
-            filename: 'main.html',
-            title: 'main~~',
-            hash: true,
-            minify: {
-                removeAttributeQuotes: true
-            },
-            chunks: ['base']
-        }),
+        // new HtmlWebpackPlugin({
+        //     template: './src/index.html',
+        //     filename: 'index.html',
+        //     title: 'index~~',
+        //     hash: true,
+        //     minify: {
+        //         removeAttributeQuotes: true
+        //     },
+        //     chunks: ['index']
+        // }),
+        // new HtmlWebpackPlugin({
+        //     template: './src/main.html',
+        //     filename: 'main.html',
+        //     title: 'main~~',
+        //     hash: true,
+        //     minify: {
+        //         removeAttributeQuotes: true
+        //     },
+        //     chunks: ['base']
+        // }),
         new CleanWebpackPlugin({
             path: path.resolve(__dirname, './dist')
         }),
@@ -156,12 +178,12 @@ const config = {
             chunkFilename: devMode ? 'css/[id].css' : 'css/[id].[hash:7].css',
             publicPath: '/css'
         }),
-        new UglifyWebpackPlugin(),
-        new Webpack.DllReferencePlugin({
-            // manifest: path.join(__dirname, 'dll', 'manifest.json')
-            context: path.resolve(__dirname, './dll'),
-            manifest: require('./dll/manifest.json')
-        }),
+        // new UglifyWebpackPlugin(),
+        // new Webpack.DllReferencePlugin({
+        //     // manifest: path.join(__dirname, 'dll', 'manifest.json')
+        //     context: path.resolve(__dirname, './dll'),
+        //     manifest: require('./dll/manifest.json')
+        // }),
         new Webpack.DefinePlugin({
             __env: process.env.NODE_ENV
         }),
