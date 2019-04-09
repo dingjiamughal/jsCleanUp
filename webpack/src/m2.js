@@ -1,1 +1,1 @@
-console.log('m2');
+export default 'm2';

@@ -112,15 +112,19 @@ const config = {
     },
     optimization: {
         splitChunks: { // 代替 common-chunk-plugin
+            chunks: 'async',
             cacheGroups: {
                 common: {
+                    name: 'common',
                     minChunks: 2,
                     minSize: 0,
-                    chunks: 'initial'
+                    filename: '[name].common.js',
+                    chunks: 'all'
                 },
                 vendor: {
+                    name: 'vendor',
                     test: /node_modules/,
-                    chunks: 'initial',
+                    chunks: 'all',
                     filename: '[name].bundle.js',
                     // priority: 10,
                     enforce: true
@@ -142,26 +146,36 @@ const config = {
             $: 'jquery',
             jQuery: 'jquery'
         }),
-        // new HtmlWebpackPlugin({
-        //     template: './src/index.html',
-        //     filename: 'index.html',
-        //     title: 'index~~',
-        //     hash: true,
-        //     minify: {
-        //         removeAttributeQuotes: true
-        //     },
-        //     chunks: ['index']
-        // }),
-        // new HtmlWebpackPlugin({
-        //     template: './src/main.html',
-        //     filename: 'main.html',
-        //     title: 'main~~',
-        //     hash: true,
-        //     minify: {
-        //         removeAttributeQuotes: true
-        //     },
-        //     chunks: ['base']
-        // }),
+        new HtmlWebpackPlugin({
+            template: './src/a.html',
+            filename: 'a.html',
+            title: 'a~~',
+            hash: true,
+            minify: {
+                removeAttributeQuotes: true
+            },
+            chunks: ['common', 'vendor', 'pageA']
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/b.html',
+            filename: 'b.html',
+            title: 'main~~',
+            hash: true,
+            minify: {
+                removeAttributeQuotes: true
+            },
+            chunks: ['common', 'pageB']
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/c.html',
+            filename: 'c.html',
+            title: 'c~~',
+            hash: true,
+            minify: {
+                removeAttributeQuotes: true
+            },
+            chunks: ['pageC', 'common']
+        }),
         new CleanWebpackPlugin({
             path: path.resolve(__dirname, './dist')
         }),
