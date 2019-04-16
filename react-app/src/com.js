@@ -29,6 +29,7 @@ class Com1 extends Component {
         );
     }
     handleClick() {
+        console.log(this)
         this.setState({
             name: 'djmughal~'
         });

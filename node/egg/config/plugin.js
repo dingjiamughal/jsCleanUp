@@ -1,4 +1,4 @@
-exports.ejs = {
-    package: 'egg-view-ejs',
+exports.pug = {
+    package: 'egg-view-pug',
     enable: true
-}
+};

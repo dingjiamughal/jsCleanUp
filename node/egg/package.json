@@ -10,7 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "egg": "^2.21.1",
-    "egg-view-ejs": "^2.0.0"
+    "egg-view-ejs": "^2.0.0",
+    "egg-view-pug": "^1.0.0",
+    "moment": "^2.24.0"
   },
   "devDependencies": {
     "egg-bin": "^4.12.3"
