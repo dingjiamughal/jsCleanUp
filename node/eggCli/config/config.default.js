@@ -24,7 +24,10 @@ module.exports = appInfo => {
 
     config.mongoose = {
         client: {
-            url: 'mongodb://127.0.0.1/eggCli'
+            url: 'mongodb://127.0.0.1/eggCli',
+            options: {
+                useNewUrlParser: true
+            }
         }
     };
     // add your user config here
