@@ -11,7 +11,7 @@ class UserController extends BaseController {
 
         try {
             const doc = await this.ctx.model.User.create(user);
-            this.success(user);
+            this.success('注册成功');
         }
         catch (e) {
             this.fail(e);

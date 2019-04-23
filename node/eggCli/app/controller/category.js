@@ -1,21 +1,9 @@
 const BaseController = require('./base');
 
 class CategoryController extends BaseController {
-    // constructor() {
-    //     super();
-    //     this.category = this.ctx.request.body;
-    // }
-
     async index() {
-        let {pageNum, pageSize, keyword} = this.ctx.request.query;
-        pageNum = isNaN(pageNum) ? 1 : parseInt(pageNum);
-        pageSize = isNaN(pageSize) ? 5 : parseInt(pageSize);
-        let query = {};
-        if (keyword) {
-            query.name = new RegExp(keyword);
-        }
         try {
-            let items = await this.ctx.model.Category.find(query).skip((pageNum - 1) * pageSize).limit(pageSize);
+            let items = await this.getPager('Category', ['name']);
             this.success({items});
         }
         catch (e) {
@@ -45,15 +33,9 @@ class CategoryController extends BaseController {
         const category = this.ctx.request.body;
         const id = this.ctx.params.id;
         try {
-            let doc = await this.ctx.model.Category.findOne(category);
+            const result = await this.ctx.model.Category.findByIdAndUpdate(id, category);
+            this.success('更新成功');
 
-            if (doc) {
-                this.fail('名字已经有了，请换一个');
-            }
-            else {
-                const result = await this.ctx.model.Category.findByIdAndUpdate(id, category);
-                this.success('更新成功');
-            }
         }
         catch (e) {
             this.faile(e);

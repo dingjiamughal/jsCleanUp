@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import './App.css';
+import {Button} from 'antd';
+
 import Com1 from './com';
 
 class App extends Component {
@@ -8,6 +9,7 @@ class App extends Component {
             <div className="App">
                 <div>
                     <Com1 text="nihao" handle={this.handleClick}></Com1>
+                    <Button>hahaha</Button>
                 </div>
             </div>
         );
