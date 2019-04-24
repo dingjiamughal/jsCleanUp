@@ -19,8 +19,18 @@ module.exports = appInfo => {
     config.middleware = [];
 
     config.security = {
-        csrf: false
+        csrf: {
+            enable: false,
+            ignoreJSON: true
+        },
+        domainWhiteList: ['http://localhost:3000']
     };
+
+    config.cors = {
+        allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
+        credentials: true,
+        origin: () => 'http://localhost:3000'
+    }
 
     config.mongoose = {
         client: {

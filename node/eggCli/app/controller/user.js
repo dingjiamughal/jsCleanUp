@@ -20,13 +20,13 @@ class UserController extends BaseController {
     }
 
     async signin() {
-        let user = this.ctx.request.body;
+        let {username, password} = this.ctx.request.body;
 
         try {
-            user = await this.ctx.model.User.findOne(user);
+            const user = await this.ctx.model.User.findOne({username, password});
             if (user) {
                 this.ctx.session.user = user;
-                this.success(user);
+                this.success('登录成功');
             }
             else {
                 this.fail('用户名或密码错误');
