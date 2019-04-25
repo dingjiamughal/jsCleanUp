@@ -14,6 +14,6 @@ export default class Admin extends Component {
                     <Header></Header>
                 </Col>
             </Row>
-        );
+        )
     }
 }
