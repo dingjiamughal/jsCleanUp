@@ -12,3 +12,7 @@ export async function signin(user) {
 export async function signup(user) {
     return await ajax('post', '/api/user/signup', user);
 }
+
+export async function signout() {
+    return await ajax('post', '/api/user/signout');
+}
