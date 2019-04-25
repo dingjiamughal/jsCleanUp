@@ -12,7 +12,7 @@ import Admin from '@/pages/admin';
 const history = createHashHistory();
 history.listen(loc => {
     if (loc.pathname === '/admin' && !sessionStorage.getItem('username')) {
-        history.push('/');
+        // history.push('/');
     }
 });
 

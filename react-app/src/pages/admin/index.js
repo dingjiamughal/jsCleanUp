@@ -4,12 +4,13 @@
  * */
 
 import React, {Component} from 'react';
+import {Route} from 'react-router-dom';
 import {Row, Col} from 'antd';
 import Header from '@/components/Header';
 import NavLeft from '@/components/NavLeft';
-import category from '@components/category';
-import article from '@components/article';
-import {Route} from 'react-router-dom';
+import Category from '@/components/category';
+import Article from '@/components/article';
+import Welcome from '@/components/Welcome'
 
 export default class Admin extends Component {
     render() {
@@ -18,12 +19,13 @@ export default class Admin extends Component {
                 <Col span={24}>
                     <Header />
                     <Row>
-                        <Col span={3}>
+                        <Col span={4}>
                             <NavLeft />
                         </Col>
-                        <Col span={21}>
-                            <Route path='/admin/category' component={category}/>
-                            <Route path='/admin/article' component={article}/>
+                        <Col span={20}>
+                            <Route path='/admin' component={Welcome}/>
+                            <Route path='/admin/category' component={Category} exact/>
+                            <Route path='/admin/article' component={Article}/>
                         </Col>
                     </Row>
                 </Col>
