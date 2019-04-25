@@ -26,7 +26,7 @@ class UserController extends BaseController {
             const user = await this.ctx.model.User.findOne({username, password});
             if (user) {
                 this.ctx.session.user = user;
-                this.success('登录成功');
+                this.success(user);
             }
             else {
                 this.fail('用户名或密码错误');

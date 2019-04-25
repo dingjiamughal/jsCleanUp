@@ -11,8 +11,12 @@ import {message} from 'antd';
 export default class Home extends Component {
     handleSubmit = (isRegister, user) => {
         const service = isRegister ? signup : signin;
-        service(user).then(({code, error}) => {
+        service(user).then(({code, data, error}) => {
             if (code === 0) {
+                if (!isRegister) {
+                    // console.log(data);
+                    sessionStorage.setItem('username', data.username);
+                }
                 this.props.history.push('/admin');
             }
             else {
