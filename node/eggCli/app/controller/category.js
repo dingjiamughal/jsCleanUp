@@ -4,7 +4,7 @@ class CategoryController extends BaseController {
     async index() {
         try {
             let items = await this.getPager('Category', ['name']);
-            this.success({items});
+            this.success(items);
         }
         catch (e) {
             this.fail(e);
