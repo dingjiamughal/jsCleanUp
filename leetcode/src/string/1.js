@@ -1,6 +1,6 @@
 const s = 'Let\'s study hard and progress together';
 
-function reverse1(str) {
+export default function reverse1(str) {
     return str.split(' ').map(item => (item.split('').reverse().join(''))).join(' ');
 }
 
