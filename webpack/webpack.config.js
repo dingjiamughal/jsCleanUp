@@ -9,6 +9,8 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const HappyPack = require('happypack');
 const merge = require('webpack-merge');
 
+const HapeWebpackPlugin = require('./loaders/hape-webpack-plugin');
+
 const devMode = process.env.NODE_ENV !== 'production';
 console.log(devMode)
 
@@ -27,7 +29,7 @@ const config = {
         // vendor: 'jquery'
         pageA: './src/a.js',
         pageB: './src/b.js',
-        pageC: './src/c.js',
+        pageC: './src/c.js'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -41,6 +43,12 @@ const config = {
                 include: path.resolve(__dirname, './src'),
                 exclude: /node_modules/,
                 use: [
+                    {
+                        loader: path.resolve(__dirname, './loaders/replaceLoaders.js'),
+                        options: {
+                            name: 'djdjdj'
+                        }
+                    },
                     {
                         loader: 'babel-loader'
                     }
@@ -140,6 +148,7 @@ const config = {
     },
     // devtool: 'cheap-module-source-map',
     plugins: [
+        new HapeWebpackPlugin(),
         new ProgressBarPlugin(),
         new Webpack.optimize.ModuleConcatenationPlugin(),
         new Webpack.ProvidePlugin({

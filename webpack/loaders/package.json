@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "@babel/traverse": "^7.4.4"
+  },
+  "dependencies": {
+    "@babel/core": "^7.4.4"
+  }
+}

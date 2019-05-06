@@ -8,3 +8,4 @@ ReactDOM.render(
 );
 
 console.log(m1, m2);
+console.log('dingjia');
