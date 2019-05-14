@@ -29,7 +29,8 @@ const config = {
         // vendor: 'jquery'
         pageA: './src/a.js',
         pageB: './src/b.js',
-        pageC: './src/c.js'
+        pageC: './src/c.js',
+        test: './src/test.js'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -148,7 +149,7 @@ const config = {
     },
     // devtool: 'cheap-module-source-map',
     plugins: [
-        new HapeWebpackPlugin(),
+        // new HapeWebpackPlugin(),
         new ProgressBarPlugin(),
         new Webpack.optimize.ModuleConcatenationPlugin(),
         new Webpack.ProvidePlugin({

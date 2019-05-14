@@ -5,7 +5,7 @@ class Hape {
 
     apply(compiler) {
         compiler.hooks.emit.tapAsync('Hape', (compilation, callback) => {
-            console.log(compilation.assets);
+            // console.log(compilation.assets);
         });
     }
 }
