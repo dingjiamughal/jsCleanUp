@@ -27,6 +27,10 @@ router.get('/base/get', (req, res) => {
     res.json(req.query);
 });
 
+router.post('/base/post', (req, res) => {
+    res.json(req.body);
+});
+
 app.use(router);
 
 app.use(webpackHotMiddleware(compiler));
