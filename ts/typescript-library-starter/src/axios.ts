@@ -1,5 +1,3 @@
-function axios(config) {
-
-}
+import axios from './index';
 
 export default axios;
