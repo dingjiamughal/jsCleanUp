@@ -28,4 +28,4 @@ export function tele(str) {
     return handle(nums);
 }
 
-console.log(tele('234'));
+// console.log(tele('234'));
