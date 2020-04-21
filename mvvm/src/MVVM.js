@@ -15,6 +15,9 @@ export default class Mvvm {
         new Compile(this.$el, this);
 
         // 2. 数据劫持
+        /**
+         * 每次访问obj，都能劫持，get - set
+         */
         new Observer(this.$data);
 
         // 代理data this.$data.name --> this.name

@@ -12,7 +12,6 @@ const merge = require('webpack-merge');
 const HapeWebpackPlugin = require('./loaders/hape-webpack-plugin');
 
 const devMode = process.env.NODE_ENV !== 'production';
-console.log(devMode)
 
 let option = {};
 if (devMode) {

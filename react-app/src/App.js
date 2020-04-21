@@ -15,7 +15,7 @@ class App extends Component {
         );
     }
 
-    handleClick = (p) => {
+    handleClick = p => {
         console.log(p);
     }
 }

@@ -17,4 +17,4 @@ module.exports = {
             path: path.join(__dirname, 'dll', 'manifest.json')
         })
     ]
-}
+};
