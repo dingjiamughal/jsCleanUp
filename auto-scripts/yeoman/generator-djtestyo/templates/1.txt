@@ -1,0 +1,7 @@
+aaxx
+xx
+<%= title %>
+
+<% if (title === 'hello world!'){ %>
+sadfasfasdfasdf
+<% } %>
