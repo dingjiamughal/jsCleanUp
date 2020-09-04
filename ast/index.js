@@ -4,6 +4,7 @@ const escodegen = require('escodegen');
 
 const code = 'function ast() {}';
 const ast = esprima.parse(code);
+console.log(ast);
 estraverse.traverse(ast, {
     enter(node) {
         if (node.type === 'Identifier') {

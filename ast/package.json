@@ -15,5 +15,8 @@
     "esprima": "^4.0.1",
     "estraverse": "^4.2.0",
     "tapable": "^1.1.3"
+  },
+  "dependencies": {
+    "recast": "^0.20.3"
   }
 }
